@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Snowflake, ClipboardList, Settings, ArrowRight, Gauge, CalendarDays, AlertTriangle } from 'lucide-react'
+import { Snowflake, ClipboardList, Settings, ArrowRight, Gauge, CalendarDays, AlertTriangle, Wind } from 'lucide-react'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
 
 export default function Home() {
@@ -48,6 +48,15 @@ export default function Home() {
       gradient: 'from-blue-500 to-blue-700',
       iconBg: 'bg-white/10',
       features: ['Ice Make Log', '7-Day Blade Alerts', '30-Point Checks']
+    },
+    {
+      title: 'Air Quality Compliance',
+      description: 'Monitor CO, NO₂, and CO₂ levels with OSHA compliance tracking and auto-incident triggering',
+      icon: Wind,
+      href: '/air-quality',
+      gradient: 'from-green-500 to-green-700',
+      iconBg: 'bg-white/10',
+      features: ['OSHA Thresholds', 'Multi-Gas Tracking', 'Auto-Alerts']
     },
     {
       title: 'Admin Control',

@@ -557,6 +557,100 @@ export interface Database {
           created_at?: string
         }
       }
+      air_quality_readings: {
+        Row: {
+          id: string
+          facility_id: string
+          sensor_id: string | null
+          tester_id: string
+          reading_date: string
+          reading_time: string
+          location: string
+          co_instant: number | null
+          co_1hr_avg: number | null
+          no2_instant: number | null
+          no2_1hr_avg: number | null
+          co2_instant: number | null
+          co2_1hr_avg: number | null
+          status: string | null
+          incident_triggered: boolean
+          incident_id: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          facility_id: string
+          sensor_id?: string | null
+          tester_id: string
+          reading_date: string
+          reading_time: string
+          location: string
+          co_instant?: number | null
+          co_1hr_avg?: number | null
+          no2_instant?: number | null
+          no2_1hr_avg?: number | null
+          co2_instant?: number | null
+          co2_1hr_avg?: number | null
+          status?: string | null
+          incident_triggered?: boolean
+          incident_id?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          facility_id?: string
+          sensor_id?: string | null
+          tester_id?: string
+          reading_date?: string
+          reading_time?: string
+          location?: string
+          co_instant?: number | null
+          co_1hr_avg?: number | null
+          no2_instant?: number | null
+          no2_1hr_avg?: number | null
+          co2_instant?: number | null
+          co2_1hr_avg?: number | null
+          status?: string | null
+          incident_triggered?: boolean
+          incident_id?: string | null
+          created_at?: string
+        }
+      }
+      air_quality_sensors: {
+        Row: {
+          id: string
+          facility_id: string
+          sensor_name: string
+          sensor_type: string | null
+          last_calibration_date: string | null
+          next_calibration_due: string | null
+          calibration_frequency_days: number
+          is_active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          facility_id: string
+          sensor_name: string
+          sensor_type?: string | null
+          last_calibration_date?: string | null
+          next_calibration_due?: string | null
+          calibration_frequency_days?: number
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          facility_id?: string
+          sensor_name?: string
+          sensor_type?: string | null
+          last_calibration_date?: string | null
+          next_calibration_due?: string | null
+          calibration_frequency_days?: number
+          is_active?: boolean
+          created_at?: string
+        }
+      }
     }
   }
 }
