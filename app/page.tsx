@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Snowflake, ClipboardList, Settings, ArrowRight, Gauge } from 'lucide-react'
+import { Snowflake, ClipboardList, Settings, ArrowRight, Gauge, CalendarDays } from 'lucide-react'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
 
 export default function Home() {
@@ -21,6 +21,15 @@ export default function Home() {
       gradient: 'from-seahawks-green to-seahawks-green-dark',
       iconBg: 'bg-white/10',
       features: ['Photo Upload', 'Custom Forms', 'Calendar View']
+    },
+    {
+      title: 'Employee Schedule',
+      description: 'Manage staff scheduling, shift assignments, and track employee availability',
+      icon: CalendarDays,
+      href: '/schedule',
+      gradient: 'from-purple-600 to-purple-800',
+      iconBg: 'bg-white/10',
+      features: ['Shift Planning', 'Swap Requests', 'Availability']
     },
     {
       title: 'Admin Control',
@@ -66,7 +75,7 @@ export default function Home() {
         </div>
 
         {/* Large Module Buttons */}
-        <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto mb-12">
           {modules.map((module) => {
             const Icon = module.icon
             return (
