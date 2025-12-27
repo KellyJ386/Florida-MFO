@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Snowflake, ClipboardList, Settings, ArrowRight, Gauge, CalendarDays } from 'lucide-react'
+import { Snowflake, ClipboardList, Settings, ArrowRight, Gauge, CalendarDays, AlertTriangle } from 'lucide-react'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
 
 export default function Home() {
@@ -30,6 +30,15 @@ export default function Home() {
       gradient: 'from-purple-600 to-purple-800',
       iconBg: 'bg-white/10',
       features: ['Shift Planning', 'Swap Requests', 'Availability']
+    },
+    {
+      title: 'Incident & Accident Reporting',
+      description: 'Document safety incidents with interactive body diagrams, immutable records, and auto-notifications',
+      icon: AlertTriangle,
+      href: '/incidents',
+      gradient: 'from-red-600 to-red-800',
+      iconBg: 'bg-white/10',
+      features: ['Body Diagram', 'Edit Window', 'Auto-Alerts']
     },
     {
       title: 'Admin Control',
