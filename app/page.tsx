@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Snowflake, ClipboardList, Settings, ArrowRight, Gauge, CalendarDays, AlertTriangle, Wind } from 'lucide-react'
+import { Snowflake, ClipboardList, Settings, ArrowRight, Gauge, CalendarDays, AlertTriangle, Wind, Thermometer } from 'lucide-react'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
 
 export default function Home() {
@@ -57,6 +57,15 @@ export default function Home() {
       gradient: 'from-green-500 to-green-700',
       iconBg: 'bg-white/10',
       features: ['OSHA Thresholds', 'Multi-Gas Tracking', 'Auto-Alerts']
+    },
+    {
+      title: 'Refrigeration Plant Monitoring',
+      description: 'Track refrigeration system with Ontario Reg 219/01 compliance and automated threshold alerts',
+      icon: Thermometer,
+      href: '/refrigeration',
+      gradient: 'from-cyan-500 to-cyan-700',
+      iconBg: 'bg-white/10',
+      features: ['3 Inspections/Day', 'System Monitoring', 'TSSA Ready']
     },
     {
       title: 'Admin Control',

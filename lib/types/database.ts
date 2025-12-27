@@ -651,6 +651,106 @@ export interface Database {
           created_at?: string
         }
       }
+      refrigeration_logs: {
+        Row: {
+          id: string
+          facility_id: string
+          operator_id: string
+          log_date: string
+          log_time: string
+          inspection_number: number | null
+          discharge_pressure: number | null
+          discharge_temp: number | null
+          suction_pressure: number | null
+          suction_temp: number | null
+          brine_supply_temp: number | null
+          brine_return_temp: number | null
+          brine_flow_rate: number | null
+          brine_concentration: number | null
+          compressor_data: Json | null
+          operator_certificate_number: string | null
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          facility_id: string
+          operator_id: string
+          log_date: string
+          log_time: string
+          inspection_number?: number | null
+          discharge_pressure?: number | null
+          discharge_temp?: number | null
+          suction_pressure?: number | null
+          suction_temp?: number | null
+          brine_supply_temp?: number | null
+          brine_return_temp?: number | null
+          brine_flow_rate?: number | null
+          brine_concentration?: number | null
+          compressor_data?: Json | null
+          operator_certificate_number?: string | null
+          notes?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          facility_id?: string
+          operator_id?: string
+          log_date?: string
+          log_time?: string
+          inspection_number?: number | null
+          discharge_pressure?: number | null
+          discharge_temp?: number | null
+          suction_pressure?: number | null
+          suction_temp?: number | null
+          brine_supply_temp?: number | null
+          brine_return_temp?: number | null
+          brine_flow_rate?: number | null
+          brine_concentration?: number | null
+          compressor_data?: Json | null
+          operator_certificate_number?: string | null
+          notes?: string | null
+          created_at?: string
+        }
+      }
+      compressor_configs: {
+        Row: {
+          id: string
+          facility_id: string
+          compressor_number: number
+          compressor_name: string
+          discharge_pressure_min: number | null
+          discharge_pressure_max: number | null
+          suction_pressure_min: number | null
+          suction_pressure_max: number | null
+          is_active: boolean
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          facility_id: string
+          compressor_number: number
+          compressor_name: string
+          discharge_pressure_min?: number | null
+          discharge_pressure_max?: number | null
+          suction_pressure_min?: number | null
+          suction_pressure_max?: number | null
+          is_active?: boolean
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          facility_id?: string
+          compressor_number?: number
+          compressor_name?: string
+          discharge_pressure_min?: number | null
+          discharge_pressure_max?: number | null
+          suction_pressure_min?: number | null
+          suction_pressure_max?: number | null
+          is_active?: boolean
+          created_at?: string
+        }
+      }
     }
   }
 }
