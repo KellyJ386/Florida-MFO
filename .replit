@@ -1,0 +1,18 @@
+run = "npm run dev"
+entrypoint = "app/page.tsx"
+hidden = [".config", ".next", "node_modules"]
+
+[nix]
+channel = "stable-23_11"
+
+[deployment]
+run = ["npm", "run", "start"]
+deploymentTarget = "cloudrun"
+ignorePorts = false
+
+[env]
+NEXT_PUBLIC_APP_URL = "https://${REPL_SLUG}.${REPL_OWNER}.repl.co"
+
+[[ports]]
+localPort = 3000
+externalPort = 80
