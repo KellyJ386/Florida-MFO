@@ -41,6 +41,15 @@ export default function Home() {
       features: ['Body Diagram', 'Edit Window', 'Auto-Alerts']
     },
     {
+      title: 'Ice Operations',
+      description: 'Track ice resurfacing, blade changes, circle checks, and generate end-of-day reports',
+      icon: Snowflake,
+      href: '/ice-operations',
+      gradient: 'from-blue-500 to-blue-700',
+      iconBg: 'bg-white/10',
+      features: ['Ice Make Log', '7-Day Blade Alerts', '30-Point Checks']
+    },
+    {
       title: 'Admin Control',
       description: 'Powerful admin dashboard for user management, template configuration, and system analytics',
       icon: Settings,

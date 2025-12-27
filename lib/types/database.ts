@@ -428,6 +428,135 @@ export interface Database {
           updated_at?: string
         }
       }
+      ice_makes: {
+        Row: {
+          id: string
+          facility_id: string
+          machine_id: string
+          rink_id: string
+          operator_id: string
+          make_date: string
+          make_time: string
+          type: 'wet' | 'dry'
+          water_used_gallons: number | null
+          snow_percentage: number
+          battery_start_percentage: number | null
+          battery_finish_percentage: number | null
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          facility_id: string
+          machine_id: string
+          rink_id: string
+          operator_id: string
+          make_date: string
+          make_time: string
+          type: 'wet' | 'dry'
+          water_used_gallons?: number | null
+          snow_percentage: number
+          battery_start_percentage?: number | null
+          battery_finish_percentage?: number | null
+          notes?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          facility_id?: string
+          machine_id?: string
+          rink_id?: string
+          operator_id?: string
+          make_date?: string
+          make_time?: string
+          type?: 'wet' | 'dry'
+          water_used_gallons?: number | null
+          snow_percentage?: number
+          battery_start_percentage?: number | null
+          battery_finish_percentage?: number | null
+          notes?: string | null
+          created_at?: string
+        }
+      }
+      blade_changes: {
+        Row: {
+          id: string
+          facility_id: string
+          machine_id: string
+          changed_by: string
+          change_date: string
+          change_time: string
+          notes: string | null
+          alert_expires_at: string | null
+          acknowledged_by: string[] | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          facility_id: string
+          machine_id: string
+          changed_by: string
+          change_date: string
+          change_time: string
+          notes?: string | null
+          alert_expires_at?: string | null
+          acknowledged_by?: string[] | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          facility_id?: string
+          machine_id?: string
+          changed_by?: string
+          change_date?: string
+          change_time?: string
+          notes?: string | null
+          alert_expires_at?: string | null
+          acknowledged_by?: string[] | null
+          created_at?: string
+        }
+      }
+      circle_checks: {
+        Row: {
+          id: string
+          facility_id: string
+          machine_id: string
+          operator_id: string
+          check_date: string
+          check_time: string
+          checkpoints: Json
+          total_checkpoints: number
+          passed_checkpoints: number
+          failed_checkpoints: number
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          facility_id: string
+          machine_id: string
+          operator_id: string
+          check_date: string
+          check_time: string
+          checkpoints: Json
+          total_checkpoints: number
+          passed_checkpoints: number
+          failed_checkpoints: number
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          facility_id?: string
+          machine_id?: string
+          operator_id?: string
+          check_date?: string
+          check_time?: string
+          checkpoints?: Json
+          total_checkpoints?: number
+          passed_checkpoints?: number
+          failed_checkpoints?: number
+          created_at?: string
+        }
+      }
     }
   }
 }
