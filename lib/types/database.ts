@@ -291,6 +291,143 @@ export interface Database {
           updated_at?: string
         }
       }
+      incidents: {
+        Row: {
+          id: string
+          incident_date: string
+          incident_time: string
+          location: string
+          activity_type: string | null
+          incident_type: string
+          injured_name: string
+          injured_age: number
+          injured_gender: string | null
+          injured_phone: string
+          injured_email: string | null
+          injured_address: string | null
+          emergency_contact_name: string | null
+          emergency_contact_phone: string | null
+          body_regions_selected: string[]
+          injury_descriptions: Json
+          severity: 'minor' | 'moderate' | 'serious' | 'critical'
+          bleeding_present: boolean
+          loss_of_consciousness: boolean
+          detailed_description: string
+          contributing_factors: string[] | null
+          first_aid_provided: boolean
+          treatment_details: string | null
+          staff_provided_treatment: string | null
+          ems_called: boolean
+          ems_arrival_time: string | null
+          hospital_transport: boolean
+          hospital_name: string | null
+          witnesses: Json | null
+          reported_by: string
+          reported_at: string
+          reporter_position: string
+          reporter_signature: string | null
+          reviewed_by: string | null
+          reviewed_at: string | null
+          manager_signature: string | null
+          manager_comments: string | null
+          status: 'draft' | 'submitted' | 'reviewed' | 'closed'
+          locked_at: string | null
+          edit_history: Json | null
+          comments: Json | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          incident_date: string
+          incident_time: string
+          location: string
+          activity_type?: string | null
+          incident_type: string
+          injured_name: string
+          injured_age: number
+          injured_gender?: string | null
+          injured_phone: string
+          injured_email?: string | null
+          injured_address?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          body_regions_selected: string[]
+          injury_descriptions: Json
+          severity: 'minor' | 'moderate' | 'serious' | 'critical'
+          bleeding_present?: boolean
+          loss_of_consciousness?: boolean
+          detailed_description: string
+          contributing_factors?: string[] | null
+          first_aid_provided?: boolean
+          treatment_details?: string | null
+          staff_provided_treatment?: string | null
+          ems_called?: boolean
+          ems_arrival_time?: string | null
+          hospital_transport?: boolean
+          hospital_name?: string | null
+          witnesses?: Json | null
+          reported_by: string
+          reported_at?: string
+          reporter_position: string
+          reporter_signature?: string | null
+          reviewed_by?: string | null
+          reviewed_at?: string | null
+          manager_signature?: string | null
+          manager_comments?: string | null
+          status?: 'draft' | 'submitted' | 'reviewed' | 'closed'
+          locked_at?: string | null
+          edit_history?: Json | null
+          comments?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          incident_date?: string
+          incident_time?: string
+          location?: string
+          activity_type?: string | null
+          incident_type?: string
+          injured_name?: string
+          injured_age?: number
+          injured_gender?: string | null
+          injured_phone?: string
+          injured_email?: string | null
+          injured_address?: string | null
+          emergency_contact_name?: string | null
+          emergency_contact_phone?: string | null
+          body_regions_selected?: string[]
+          injury_descriptions?: Json
+          severity?: 'minor' | 'moderate' | 'serious' | 'critical'
+          bleeding_present?: boolean
+          loss_of_consciousness?: boolean
+          detailed_description?: string
+          contributing_factors?: string[] | null
+          first_aid_provided?: boolean
+          treatment_details?: string | null
+          staff_provided_treatment?: string | null
+          ems_called?: boolean
+          ems_arrival_time?: string | null
+          hospital_transport?: boolean
+          hospital_name?: string | null
+          witnesses?: Json | null
+          reported_by?: string
+          reported_at?: string
+          reporter_position?: string
+          reporter_signature?: string | null
+          reviewed_by?: string | null
+          reviewed_at?: string | null
+          manager_signature?: string | null
+          manager_comments?: string | null
+          status?: 'draft' | 'submitted' | 'reviewed' | 'closed'
+          locked_at?: string | null
+          edit_history?: Json | null
+          comments?: Json | null
+          created_at?: string
+          updated_at?: string
+        }
+      }
     }
   }
 }
