@@ -130,7 +130,6 @@ export interface Database {
           shift: 'morning' | 'afternoon' | 'evening'
           submitted_by: string
           data: Json
-          photos: string[]
           created_at: string
           updated_at: string
         }
@@ -141,7 +140,6 @@ export interface Database {
           shift: 'morning' | 'afternoon' | 'evening'
           submitted_by: string
           data: Json
-          photos?: string[]
           created_at?: string
           updated_at?: string
         }
@@ -152,7 +150,6 @@ export interface Database {
           shift?: 'morning' | 'afternoon' | 'evening'
           submitted_by?: string
           data?: Json
-          photos?: string[]
           created_at?: string
           updated_at?: string
         }

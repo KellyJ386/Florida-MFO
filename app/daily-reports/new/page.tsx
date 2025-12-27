@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/lib/hooks/useAuth'
-import { Camera } from 'lucide-react'
 import type { ReportTab, ReportField } from '@/lib/types/database'
 import type { Database } from '@/lib/types/database'
 
@@ -15,7 +14,6 @@ export default function NewReportPage() {
   const [tabs, setTabs] = useState<ReportTab[]>([])
   const [activeTab, setActiveTab] = useState(0)
   const [formData, setFormData] = useState<Record<string, any>>({})
-  const [photos, setPhotos] = useState<File[]>([])
   const [reportDate, setReportDate] = useState(new Date().toISOString().split('T')[0])
   const [shift, setShift] = useState<'morning' | 'afternoon' | 'evening'>('morning')
   const [loading, setLoading] = useState(true)
@@ -81,33 +79,11 @@ export default function NewReportPage() {
     })
   }
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setPhotos([...photos, ...Array.from(e.target.files)])
-    }
-  }
-
   const handleSubmit = async () => {
     if (!user || !template) return
 
     setSaving(true)
     try {
-      // Upload photos
-      const photoUrls: string[] = []
-      for (const photo of photos) {
-        const fileName = `${user.id}/${Date.now()}_${photo.name}`
-        const { error: uploadError } = await supabase.storage
-          .from('report-photos')
-          .upload(fileName, photo)
-
-        if (!uploadError) {
-          const { data: { publicUrl } } = supabase.storage
-            .from('report-photos')
-            .getPublicUrl(fileName)
-          photoUrls.push(publicUrl)
-        }
-      }
-
       // Save report
       const { error } = await supabase
         .from('daily_reports')
@@ -117,7 +93,6 @@ export default function NewReportPage() {
           shift,
           submitted_by: user.id,
           data: formData,
-          photos: photoUrls,
         })
 
       if (error) throw error
@@ -311,45 +286,6 @@ export default function NewReportPage() {
                       {field.required && <span className="text-red-500 ml-1">*</span>}
                     </label>
                     {renderField(tabs[activeTab].id, field)}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Photos */}
-        <div className="bg-white rounded-lg shadow p-6 mt-6">
-          <h3 className="text-lg font-semibold mb-4">Photos</h3>
-          <div className="space-y-4">
-            <label className="flex items-center justify-center w-full px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500">
-              <div className="text-center">
-                <Camera className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-                <span className="text-sm text-gray-600">Click to upload photos</span>
-              </div>
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                onChange={handlePhotoUpload}
-                className="hidden"
-              />
-            </label>
-            {photos.length > 0 && (
-              <div className="grid grid-cols-3 gap-4">
-                {photos.map((photo, index) => (
-                  <div key={index} className="relative">
-                    <img
-                      src={URL.createObjectURL(photo)}
-                      alt={`Photo ${index + 1}`}
-                      className="w-full h-32 object-cover rounded-lg"
-                    />
-                    <button
-                      onClick={() => setPhotos(photos.filter((_, i) => i !== index))}
-                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
-                    >
-                      ×
-                    </button>
                   </div>
                 ))}
               </div>

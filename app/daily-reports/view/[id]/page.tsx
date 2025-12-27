@@ -118,7 +118,6 @@ export default function ViewReportPage() {
 
   const tabs = template.tabs as ReportTab[]
   const formData = report.data as Record<string, any>
-  const photos = report.photos || []
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -207,30 +206,6 @@ export default function ViewReportPage() {
                 )}
               </div>
             </div>
-
-            {/* Photos */}
-            {photos.length > 0 && (
-              <div className="mt-6 bg-white rounded-lg shadow p-6">
-                <h3 className="text-lg font-semibold mb-4">Photos ({photos.length})</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {photos.map((photo, index) => (
-                    <a
-                      key={index}
-                      href={photo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block"
-                    >
-                      <img
-                        src={photo}
-                        alt={`Photo ${index + 1}`}
-                        className="w-full h-48 object-cover rounded-lg hover:opacity-90 transition-opacity"
-                      />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Sidebar */}

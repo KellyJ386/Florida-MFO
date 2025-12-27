@@ -23,7 +23,6 @@ Comprehensive ice rink management system with Ice Depth Management and Daily Rep
 - [x] Daily reports table
 - [x] Row-level security policies
 - [x] Database triggers for timestamps
-- [x] Storage bucket setup for photos
 
 ### 1.3 Authentication ✅ 100%
 - [x] Supabase client configuration (browser + server)
@@ -134,19 +133,7 @@ Comprehensive ice rink management system with Ice Depth Management and Daily Rep
 - [ ] **MISSING: Custom validation rules**
 - [ ] **MISSING: Field descriptions/help text**
 
-### 3.3 Photo Management ⚠️ 40%
-- [x] File upload input
-- [x] Photo preview
-- [x] Remove photo functionality
-- [x] Supabase Storage integration
-- [ ] **MISSING: Image compression**
-- [ ] **MISSING: Image rotation/editing**
-- [ ] **MISSING: Drag-and-drop upload**
-- [ ] **MISSING: Camera capture on mobile**
-- [ ] **MISSING: Photo captions**
-- [ ] **MISSING: Gallery view**
-
-### 3.4 Template System ❌ 10%
+### 3.3 Template System ❌ 10%
 - [x] Default report template
 - [x] Template data structure
 - [ ] **MISSING: Template editor UI**
@@ -156,7 +143,7 @@ Comprehensive ice rink management system with Ice Depth Management and Daily Rep
 - [ ] **MISSING: Template versioning**
 - [ ] **MISSING: Template preview**
 
-### 3.5 Report Management ❌ 20%
+### 3.4 Report Management ❌ 20%
 - [x] Recent reports table
 - [x] Basic report listing
 - [ ] **MISSING: Calendar view**
@@ -166,7 +153,7 @@ Comprehensive ice rink management system with Ice Depth Management and Daily Rep
 - [ ] **MISSING: Comments/notes on reports**
 - [ ] **MISSING: Report export (PDF/Excel)**
 
-### 3.6 Notifications ❌ 0%
+### 3.5 Notifications ❌ 0%
 - [ ] **MISSING: Missing report alerts**
 - [ ] **MISSING: Shift handoff notifications**
 - [ ] **MISSING: Email digests**
@@ -272,7 +259,6 @@ Comprehensive ice rink management system with Ice Depth Management and Daily Rep
 - [x] Touch-friendly UI elements
 - [ ] **MISSING: Mobile navigation menu**
 - [ ] **MISSING: Swipe gestures**
-- [ ] **MISSING: Mobile-specific camera integration**
 - [ ] **MISSING: Haptic feedback**
 - [ ] **MISSING: Mobile testing on real devices**
 
@@ -372,8 +358,7 @@ Comprehensive ice rink management system with Ice Depth Management and Daily Rep
 2. Calendar View for Reports
 3. User Management
 4. Analytics Dashboard
-5. Image Compression for Photos
-6. Search/Filter Functionality
+5. Search/Filter Functionality
 
 ### Lower Priority (Nice to Have)
 1. Heat Map Visualization
@@ -402,7 +387,6 @@ Comprehensive ice rink management system with Ice Depth Management and Daily Rep
 1. Calendar View
 2. Analytics Dashboard
 3. Search/Filter Features
-4. Image Compression
 
 ### Sprint 4 (Polish - Week 7-8)
 1. Service Worker & PWA
@@ -460,7 +444,6 @@ Comprehensive ice rink management system with Ice Depth Management and Daily Rep
 - `components/shared/Toast.tsx`
 - `components/shared/SearchBar.tsx`
 - `components/shared/DateRangePicker.tsx`
-- `components/shared/ImageUpload.tsx`
 
 ### Service Worker
 - `public/sw.js` - Service worker

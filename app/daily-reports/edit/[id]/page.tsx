@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { useRouter, useParams } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { useAuth } from '@/lib/hooks/useAuth'
-import { Camera } from 'lucide-react'
 import type { ReportTab, ReportField } from '@/lib/types/database'
 import type { Database } from '@/lib/types/database'
 
@@ -17,8 +16,6 @@ export default function EditReportPage() {
   const [tabs, setTabs] = useState<ReportTab[]>([])
   const [activeTab, setActiveTab] = useState(0)
   const [formData, setFormData] = useState<Record<string, any>>({})
-  const [existingPhotos, setExistingPhotos] = useState<string[]>([])
-  const [newPhotos, setNewPhotos] = useState<File[]>([])
   const [reportDate, setReportDate] = useState('')
   const [shift, setShift] = useState<'morning' | 'afternoon' | 'evening'>('morning')
   const [loading, setLoading] = useState(true)
@@ -46,7 +43,6 @@ export default function EditReportPage() {
 
       setReport(reportData)
       setFormData(reportData.data as Record<string, any>)
-      setExistingPhotos(reportData.photos || [])
       setReportDate(reportData.report_date)
       setShift(reportData.shift)
 
@@ -77,44 +73,11 @@ export default function EditReportPage() {
     })
   }
 
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setNewPhotos([...newPhotos, ...Array.from(e.target.files)])
-    }
-  }
-
-  const handleRemoveExistingPhoto = (index: number) => {
-    setExistingPhotos(existingPhotos.filter((_, i) => i !== index))
-  }
-
-  const handleRemoveNewPhoto = (index: number) => {
-    setNewPhotos(newPhotos.filter((_, i) => i !== index))
-  }
-
   const handleSubmit = async () => {
     if (!user || !report) return
 
     setSaving(true)
     try {
-      // Upload new photos
-      const newPhotoUrls: string[] = []
-      for (const photo of newPhotos) {
-        const fileName = `${user.id}/${Date.now()}_${photo.name}`
-        const { error: uploadError } = await supabase.storage
-          .from('report-photos')
-          .upload(fileName, photo)
-
-        if (!uploadError) {
-          const { data: { publicUrl } } = supabase.storage
-            .from('report-photos')
-            .getPublicUrl(fileName)
-          newPhotoUrls.push(publicUrl)
-        }
-      }
-
-      // Combine existing and new photos
-      const allPhotos = [...existingPhotos, ...newPhotoUrls]
-
       // Update report
       const { error } = await supabase
         .from('daily_reports')
@@ -122,7 +85,6 @@ export default function EditReportPage() {
           report_date: reportDate,
           shift,
           data: formData,
-          photos: allPhotos,
         })
         .eq('id', reportId)
 
@@ -310,74 +272,6 @@ export default function EditReportPage() {
               </div>
             )}
           </div>
-        </div>
-
-        {/* Photos */}
-        <div className="bg-white rounded-lg shadow p-6 mt-6">
-          <h3 className="text-lg font-semibold mb-4">Photos</h3>
-
-          {/* Existing Photos */}
-          {existingPhotos.length > 0 && (
-            <div className="mb-4">
-              <h4 className="text-sm font-medium text-gray-700 mb-2">Current Photos</h4>
-              <div className="grid grid-cols-3 gap-4">
-                {existingPhotos.map((photo, index) => (
-                  <div key={index} className="relative">
-                    <img
-                      src={photo}
-                      alt={`Photo ${index + 1}`}
-                      className="w-full h-32 object-cover rounded-lg"
-                    />
-                    <button
-                      onClick={() => handleRemoveExistingPhoto(index)}
-                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* New Photos */}
-          {newPhotos.length > 0 && (
-            <div className="mb-4">
-              <h4 className="text-sm font-medium text-gray-700 mb-2">New Photos</h4>
-              <div className="grid grid-cols-3 gap-4">
-                {newPhotos.map((photo, index) => (
-                  <div key={index} className="relative">
-                    <img
-                      src={URL.createObjectURL(photo)}
-                      alt={`New Photo ${index + 1}`}
-                      className="w-full h-32 object-cover rounded-lg"
-                    />
-                    <button
-                      onClick={() => handleRemoveNewPhoto(index)}
-                      className="absolute top-2 right-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600"
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Upload Button */}
-          <label className="flex items-center justify-center w-full px-4 py-6 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer hover:border-blue-500">
-            <div className="text-center">
-              <Camera className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-              <span className="text-sm text-gray-600">Click to add photos</span>
-            </div>
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handlePhotoUpload}
-              className="hidden"
-            />
-          </label>
         </div>
 
         {/* Actions */}
