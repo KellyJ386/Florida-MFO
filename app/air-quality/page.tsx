@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 import { Wind, Home, Save, AlertTriangle, CheckCircle2, TrendingUp, TrendingDown } from 'lucide-react'
 import Link from 'next/link'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
+import { useFacility } from '@/lib/hooks/useFacility'
 
 const LOCATIONS = [
   'Rink Level',
@@ -36,6 +37,7 @@ const THRESHOLDS = {
 export default function AirQualityPage() {
   const router = useRouter()
   const supabase = createClient()
+  const { facilityId } = useFacility()
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState<any>(null)
   const [recentReadings, setRecentReadings] = useState<any[]>([])
@@ -181,8 +183,8 @@ export default function AirQualityPage() {
       const { data: readingData, error: readingError } = await supabase
         .from('air_quality_readings')
         .insert({
-          facility_id: '00000000-0000-0000-0000-000000000000', // Placeholder
-          tester_id: user?.id || '00000000-0000-0000-0000-000000000000',
+          facility_id: facilityId,
+          recorded_by: user?.id,
           reading_date: new Date().toISOString().split('T')[0],
           reading_time: new Date().toLocaleTimeString('en-US', {
             hour12: false,
@@ -204,8 +206,61 @@ export default function AirQualityPage() {
 
       if (readingError) throw readingError
 
-      // TODO: If shouldTriggerIncident, create incident report
-      // For now, just show a message
+      // Create incident report if emergency thresholds exceeded
+      if (shouldTriggerIncident && readingData) {
+        const incidentDescription = `AUTOMATIC INCIDENT - Air Quality Emergency\n\nLocation: ${location}\n\nGas Readings:\n${
+          coVal >= THRESHOLDS.co.emergency ? `• CO: ${coVal} ppm (Emergency threshold: ≥30 ppm)\n` : ''
+        }${no2Val >= THRESHOLDS.no2.emergency ? `• NO₂: ${no2Val} ppm (Emergency threshold: ≥0.5 ppm)\n` : ''
+        }${co2Val >= THRESHOLDS.co2.critical ? `• CO₂: ${co2Val} ppm (Critical threshold: ≥5,000 ppm)\n` : ''
+        }\nAir Quality Reading ID: ${readingData.id}\n\nImmediate evacuation and ventilation required. All staff and visitors in affected area should be accounted for and monitored for symptoms of gas exposure (headache, dizziness, nausea, difficulty breathing).`
+
+        const { data: incidentData, error: incidentError } = await supabase
+          .from('incidents')
+          .insert({
+            facility_id: facilityId,
+            incident_date: new Date().toISOString().split('T')[0],
+            incident_time: new Date().toLocaleTimeString('en-US', {
+              hour12: false,
+              hour: '2-digit',
+              minute: '2-digit',
+            }),
+            location,
+            activity_type: 'Facility Operations',
+            incident_type: 'Air Quality Emergency',
+            injured_name: 'Multiple Potential Exposures',
+            injured_age: 0,
+            body_regions_selected: [],
+            injury_descriptions: {},
+            severity: 'critical',
+            bleeding_present: false,
+            loss_of_consciousness: false,
+            first_aid_given: false,
+            ems_called: false,
+            hospital_transport: false,
+            detailed_description: incidentDescription,
+            witnesses: [],
+            photos_attached: [],
+            status: 'submitted',
+            reported_by: user?.id,
+            reported_at: new Date().toISOString(),
+          })
+          .select()
+          .single()
+
+        if (incidentError) {
+          console.error('Error creating incident:', incidentError)
+          // Don't fail the whole operation if incident creation fails
+          alert(
+            '⚠️ Warning: Air quality reading saved, but automatic incident report creation failed. Please create incident manually.'
+          )
+        } else if (incidentData) {
+          // Update the air quality reading with the incident link
+          await supabase
+            .from('air_quality_readings')
+            .update({ incident_id: incidentData.id })
+            .eq('id', readingData.id)
+        }
+      }
 
       // Reset form
       setLocation('')

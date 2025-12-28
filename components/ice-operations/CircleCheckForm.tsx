@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Save, CheckCircle2, XCircle, AlertTriangle } from 'lucide-react'
+import { useFacility } from '@/lib/hooks/useFacility'
 
 const MACHINES = [
   { id: '1', name: 'Zamboni #1 (Electric)', type: 'electric' },
@@ -78,6 +79,7 @@ const ELECTRIC_CHECKPOINTS = [
 
 export function CircleCheckForm() {
   const supabase = createClient()
+  const { facilityId } = useFacility()
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState<any>(null)
 
@@ -174,9 +176,9 @@ export function CircleCheckForm() {
 
     try {
       const { error } = await supabase.from('circle_checks').insert({
-        facility_id: '00000000-0000-0000-0000-000000000000', // Placeholder
+        facility_id: facilityId,
         machine_id: machineId,
-        operator_id: user?.id || '00000000-0000-0000-0000-000000000000',
+        operator_id: user?.id,
         check_date: new Date().toISOString().split('T')[0],
         check_time: new Date().toLocaleTimeString('en-US', {
           hour12: false,

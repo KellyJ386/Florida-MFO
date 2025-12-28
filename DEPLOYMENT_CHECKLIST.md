@@ -18,6 +18,9 @@
 - [x] TypeScript database types for all tables
 - [x] Dashboard navigation updated with all modules
 - [x] Dark mode support throughout
+- [x] Created `useFacility` hook for facility context
+- [x] Replaced all placeholder facility_id values with actual facility context
+- [x] Implemented auto-incident creation for air quality emergencies
 
 ## ⚠️ Required Before Deployment
 
@@ -42,55 +45,30 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 - [ ] Replace `NEXT_PUBLIC_SUPABASE_ANON_KEY` with actual anon key from Supabase
 - [ ] Update `NEXT_PUBLIC_APP_URL` for production deployment
 
-### 3. Fix Placeholder facility_id Values
+### 3. ~~Fix Placeholder facility_id Values~~ ✅ COMPLETED
 
-**Files requiring updates (5 total):**
-- [ ] `/app/refrigeration/page.tsx` (line ~155)
-- [ ] `/app/air-quality/page.tsx` (line ~155)
-- [ ] `/components/ice-operations/CircleCheckForm.tsx` (line ~177)
-- [ ] `/components/ice-operations/BladeChangeLogForm.tsx` (line ~92)
-- [ ] `/components/ice-operations/IceMakeLogForm.tsx` (line ~118)
+**All files updated:**
+- [x] Created `/lib/hooks/useFacility.ts` hook
+- [x] Updated `/app/refrigeration/page.tsx`
+- [x] Updated `/app/air-quality/page.tsx`
+- [x] Updated `/components/ice-operations/CircleCheckForm.tsx`
+- [x] Updated `/components/ice-operations/BladeChangeLogForm.tsx`
+- [x] Updated `/components/ice-operations/IceMakeLogForm.tsx`
 
-**Current code:**
-```typescript
-facility_id: '00000000-0000-0000-0000-000000000000', // Placeholder
-```
+**Implementation:**
+All components now use `useFacility()` hook which returns the authenticated user's ID as the facility_id.
 
-**Recommended fix:**
-Create a context provider to get facility_id from authenticated user:
-```typescript
-// lib/contexts/FacilityContext.tsx
-export const useFacility = () => {
-  const { user } = useAuth()
-  return user?.id // Or fetch from user metadata
-}
+### 4. ~~Implement Auto-Incident Creation for Air Quality~~ ✅ COMPLETED
 
-// In components:
-const facilityId = useFacility()
-facility_id: facilityId,
-```
+**File:** `/app/air-quality/page.tsx`
 
-### 4. Implement Auto-Incident Creation for Air Quality
-
-**File:** `/app/air-quality/page.tsx` (line ~207)
-
-**Current code:**
-```typescript
-// TODO: If shouldTriggerIncident, create incident report
-// For now, just show a message
-if (shouldTriggerIncident) {
-  alert(
-    '⚠️ EMERGENCY: CO or NO₂ levels exceed emergency thresholds!\n\nAn incident report will be automatically created.'
-  )
-}
-```
-
-**Action Required:**
-- [ ] Implement actual incident creation in Supabase
-- [ ] Auto-populate incident type as "Air Quality Emergency"
-- [ ] Set severity to "critical"
-- [ ] Include gas levels in detailed description
-- [ ] Link air quality reading to incident via `incident_id` field
+**Implementation:**
+- [x] Automatic incident creation when CO ≥30 ppm OR NO₂ ≥0.5 ppm
+- [x] Incident type: "Air Quality Emergency"
+- [x] Severity: "critical"
+- [x] Gas levels included in detailed description
+- [x] Air quality reading linked to incident via `incident_id` field
+- [x] Graceful error handling if incident creation fails
 
 ### 5. Build & Test
 - [ ] Run `npm run build` in environment with internet access

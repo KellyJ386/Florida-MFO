@@ -6,6 +6,7 @@ import { createClient } from '@/lib/supabase/client'
 import { Thermometer, Home, Save, AlertTriangle, CheckCircle2, Activity, Droplets } from 'lucide-react'
 import Link from 'next/link'
 import { ThemeToggle } from '@/components/shared/ThemeToggle'
+import { useFacility } from '@/lib/hooks/useFacility'
 
 // Normal thresholds
 const THRESHOLDS = {
@@ -21,6 +22,7 @@ const THRESHOLDS = {
 export default function RefrigerationPage() {
   const router = useRouter()
   const supabase = createClient()
+  const { facilityId } = useFacility()
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState<any>(null)
   const [todayLogs, setTodayLogs] = useState<any[]>([])
@@ -187,8 +189,8 @@ export default function RefrigerationPage() {
 
     try {
       const { error } = await supabase.from('refrigeration_logs').insert({
-        facility_id: '00000000-0000-0000-0000-000000000000', // Placeholder
-        operator_id: user?.id || '00000000-0000-0000-0000-000000000000',
+        facility_id: facilityId,
+        operator_id: user?.id,
         log_date: new Date().toISOString().split('T')[0],
         log_time: new Date().toLocaleTimeString('en-US', {
           hour12: false,

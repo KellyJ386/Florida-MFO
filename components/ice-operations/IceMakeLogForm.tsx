@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Save, Plus } from 'lucide-react'
+import { useFacility } from '@/lib/hooks/useFacility'
 
 const MACHINES = [
   { id: '1', name: 'Zamboni #1 (Electric)', type: 'electric' },
@@ -17,6 +18,7 @@ const RINKS = [
 
 export function IceMakeLogForm() {
   const supabase = createClient()
+  const { facilityId } = useFacility()
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState<any>(null)
   const [recentMakes, setRecentMakes] = useState<any[]>([])
@@ -116,10 +118,10 @@ export function IceMakeLogForm() {
 
     try {
       const { error } = await supabase.from('ice_makes').insert({
-        facility_id: '00000000-0000-0000-0000-000000000000', // Placeholder
+        facility_id: facilityId,
         machine_id: machineId,
         rink_id: rinkId,
-        operator_id: user?.id || '00000000-0000-0000-0000-000000000000',
+        operator_id: user?.id,
         make_date: currentDate,
         make_time: currentTime,
         type: makeType,

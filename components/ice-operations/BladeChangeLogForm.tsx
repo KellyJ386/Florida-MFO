@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { Save, AlertTriangle, Clock } from 'lucide-react'
+import { useFacility } from '@/lib/hooks/useFacility'
 
 const MACHINES = [
   { id: '1', name: 'Zamboni #1 (Electric)' },
@@ -12,6 +13,7 @@ const MACHINES = [
 
 export function BladeChangeLogForm() {
   const supabase = createClient()
+  const { facilityId } = useFacility()
   const [loading, setLoading] = useState(false)
   const [user, setUser] = useState<any>(null)
   const [userProfile, setUserProfile] = useState<any>(null)
@@ -89,9 +91,9 @@ export function BladeChangeLogForm() {
       expiresAt.setDate(expiresAt.getDate() + 7)
 
       const { error } = await supabase.from('blade_changes').insert({
-        facility_id: '00000000-0000-0000-0000-000000000000', // Placeholder
+        facility_id: facilityId,
         machine_id: machineId,
-        changed_by: user?.id || '00000000-0000-0000-0000-000000000000',
+        changed_by: user?.id,
         change_date: new Date().toISOString().split('T')[0],
         change_time: new Date().toLocaleTimeString('en-US', {
           hour12: false,
